@@ -56,7 +56,10 @@ public class homeActivity extends AppCompatActivity {
         findViewById(R.id.ll_todelete).setVisibility(View.INVISIBLE);
         findViewById(R.id.ll_todownload).setVisibility(View.INVISIBLE);
         findViewById(R.id.view_seperator).setVisibility(View.INVISIBLE);
-        findViewById(R.id.b_download).setVisibility(View.INVISIBLE);
+
+        Button b_download = findViewById(R.id.b_download);
+        b_download.setVisibility(View.INVISIBLE);
+        b_download.setText(R.string.BUTTON_DOWNLOAD);
 
         findViewById(R.id.b_tokeep_look).setEnabled(true);
         findViewById(R.id.b_todelete_look).setEnabled(true);
@@ -103,6 +106,9 @@ public class homeActivity extends AppCompatActivity {
             findViewById(R.id.ll_todelete).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_todownload).setVisibility(View.VISIBLE);
             findViewById(R.id.view_seperator).setVisibility(View.VISIBLE);
+
+            Button b_download = findViewById(R.id.b_download);
+            b_download.setText(String.format(Locale.FRENCH,"%d (%s)", R.string.BUTTON_DOWNLOAD, listingMusic.getSizeToDownload()));
 
             if (listingMusic.getToKeep().size() > 0 || listingMusic.getToDelete().size() > 0 || listingMusic.getToDownload().size() > 0)
                 findViewById(R.id.b_download).setVisibility(View.VISIBLE);
