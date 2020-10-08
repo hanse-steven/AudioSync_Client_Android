@@ -108,7 +108,7 @@ public class homeActivity extends AppCompatActivity {
             findViewById(R.id.view_seperator).setVisibility(View.VISIBLE);
 
             Button b_download = findViewById(R.id.b_download);
-            b_download.setText(String.format(Locale.FRENCH,"%d (%s)", R.string.BUTTON_DOWNLOAD, listingMusic.getSizeToDownload()));
+            b_download.setText(String.format(Locale.FRENCH,"%s  (%s)", getResources().getString(R.string.BUTTON_DOWNLOAD), listingMusic.getSizeToDownload()));
 
             if (listingMusic.getToKeep().size() > 0 || listingMusic.getToDelete().size() > 0 || listingMusic.getToDownload().size() > 0)
                 findViewById(R.id.b_download).setVisibility(View.VISIBLE);
