@@ -55,12 +55,9 @@ public class DownloadFile extends AsyncTask<String,Integer,String> {
             SystemClock.sleep(500);
             while (progressCurrent < progressMax) {
                 String filename = listingMusic.get(progressCurrent).getName();
-                if (filename.length() > 43)
-                    filename = filename.substring(0,42 - ("(" + progressCurrent + "/" + progressMax + ")").length());
-
 
                 notification.setProgress(progressMax,progressCurrent,false)
-                    .setContentText(filename + "  (" + progressCurrent + "/" + progressMax + ")");
+                    .setContentText("(" + progressCurrent + "/" + progressMax + ")   " + filename);
                 ((homeActivity) parent).notificationManager.notify(2,notification.build());
                 SystemClock.sleep(1000);
             }
