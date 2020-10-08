@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AudioSync</string>
+    <string name="API_VERSION">1.0</string>
+    <string name="API_URL">http://195.154.106.238/AudioSync/</string>
+    <string name="BUTTON_VALUE_LOCAL">Reload Local</string>
+    <string name="BUTTON_VALUE_WEB">Reload Web</string>
+
+    <string name="TEXT_IMAGEVIEW">Image_de_synchronisation</string>
+    <string name="BUTTON_SYNCH">Synchronisation</string>
+    <string name="BUTTON_DOWNLOAD">Télécharger les musiques</string>
+
+    <string name="TEXT_TV_TOKEEP_NAME">A garder: </string>
+    <string name="TEXT_TV_TODELETE_NAME">A supprimer: </string>
+    <string name="TEXT_TV_TODOWNLOAD_NAME">A télécharger: </string>
+    <string name="TEXT_TV_VALUE_DEFAULT">0</string>
+    <string name="TEXT_BT_LOOK">Voir</string>
+
+
+</resources>

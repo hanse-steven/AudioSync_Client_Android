@@ -1,0 +1,19 @@
+ArrayAdapter<Music> arrayMusic = new ArrayAdapter<Music>(this, android.R.layout.simple_list_item_1, musicTab){
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View view = super.getView(position,convertView,parent);
+        TextView text = view.findViewById(android.R.id.text1);
+
+        String buffer = text.getText().toString();
+        buffer = buffer.substring(buffer.indexOf('\n') + 1);
+
+        if(listingMusic.getToKeep().contains(buffer))
+            text.setTextColor(Color.GREEN);
+        else if (listingMusic.getToDelete().contains(buffer))
+            text.setTextColor(Color.RED);
+        else text.setTextColor(Color.YELLOW);
+
+        return view;
+    }
+};
