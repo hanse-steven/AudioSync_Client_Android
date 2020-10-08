@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import be.isservers.audiosync.R;
+import be.isservers.audiosync.asyncTask.DeleteFile;
 import be.isservers.audiosync.convert.ListingMusic;
 import be.isservers.audiosync.convert.Music;
 import be.isservers.audiosync.asyncTask.DownloadFile;
@@ -143,6 +144,7 @@ public class homeActivity extends AppCompatActivity {
 
     public void b_download_Click(View view) {
         new DownloadFile(this,listingMusic.getToDownload()).execute();
+        new DeleteFile(this,listingMusic.getToDelete()).execute();
     }
 
     public void createNotificationChannels(){
