@@ -2,6 +2,7 @@ package be.isservers.audiosync.asyncTask;
 
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -49,12 +50,9 @@ public class DeleteFile extends AsyncTask<String,Integer,String> {
             SystemClock.sleep(500);
             while (progressCurrent < progressMax) {
                 String filename = listingMusic.get(progressCurrent).getName();
-                if (filename.length() > 43)
-                    filename = filename.substring(0,42 - ("(" + progressCurrent + "/" + progressMax + ")").length());
-
 
                 notification.setProgress(progressMax,progressCurrent,false)
-                        .setContentText(filename + "  (" + progressCurrent + "/" + progressMax + ")");
+                        .setContentText("(" + progressCurrent + "/" + progressMax + ")   " + filename);
                 ((homeActivity) parent).notificationManager.notify(2,notification.build());
                 SystemClock.sleep(1000);
             }
@@ -70,9 +68,11 @@ public class DeleteFile extends AsyncTask<String,Integer,String> {
         for (Music music : listingMusic) {
             publishProgress(1);
             String filename = music.getName().replace(" ","_");
-            new File(Music.PathToMusic + "/"+filename+".mp3").delete();
+            if(!new File(Music.PathToMusic + "/"+filename).delete()){
+                System.out.println("Echec dans la suppresion de " + Music.PathToMusic + "/"+filename);
+            };
         }
-        
+        Toast.makeText(parent,"Suppresion terminée",Toast.LENGTH_SHORT).show();
         return null;
     }
     @Override

@@ -24,10 +24,10 @@ import java.util.concurrent.ExecutionException;
 
 import be.isservers.audiosync.R;
 import be.isservers.audiosync.asyncTask.DeleteFile;
+import be.isservers.audiosync.asyncTask.PostRequest;
 import be.isservers.audiosync.convert.ListingMusic;
 import be.isservers.audiosync.convert.Music;
 import be.isservers.audiosync.asyncTask.DownloadFile;
-import be.isservers.audiosync.asyncTask.HttpRequest;
 
 import static be.isservers.audiosync.authorization.AutorizationRequest.requestStoragePermission;
 
@@ -47,8 +47,6 @@ public class homeActivity extends AppCompatActivity {
 
         requestStoragePermission(this);
         hideAllBeforeSynchronisation();
-
-
     }
 
     private void hideAllBeforeSynchronisation(){
@@ -81,13 +79,12 @@ public class homeActivity extends AppCompatActivity {
             Collections.sort(musicTab);
         }
 
-        Log.d("Liste des données",ConvertListToStringList(musicTab));
-
-        HttpRequest task = new HttpRequest();
+        PostRequest task = new PostRequest();
+        Gson gson = new Gson();
         try {
-            String result = task.execute("http://audiosync.isservers.be/httpRequest/script.php?v=" + ConvertListToStringList(musicTab)).get();
+            String result = task.execute("http://isservers.be:9090/synchronization",gson.toJson(musicTab)).get();
 
-            Gson gson = new Gson();
+
             listingMusic = gson.fromJson(result, ListingMusic.class);
 
             Button button_tokeep = findViewById(R.id.button_tokeep_value);
@@ -117,17 +114,6 @@ public class homeActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    private String ConvertListToStringList(ArrayList<Music> musicTab){
-        ArrayList<String> listString = new ArrayList<>();
-
-        for (Music music : musicTab) {
-            if (music.getHash() != null)
-                listString.add(music.toString());
-        }
-
-        return new Gson().toJson(listString);
     }
 
     private void launchListingActivity(List<Music> list){
