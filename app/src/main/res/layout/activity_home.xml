@@ -11,22 +11,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/iv_logo"
             app:srcCompat="@mipmap/ic_launcher_foreground"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="-20dp"
-            android:contentDescription="@string/TEXT_IMAGEVIEW" />
+            android:contentDescription="@string/TEXT_IMAGEVIEW" />-->
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:fabCustomSize="180dp"
+            app:maxImageSize="175dp"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:layout_margin="25dp"
+            app:srcCompat="@drawable/ic_notification"
+            android:onClick="b_sync_Click"
+            android:rotation="10"/>
+
+        <!--<Button
             android:id="@+id/b_sync"
             android:text="@string/BUTTON_SYNCH"
             android:onClick="b_sync_Click"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:padding="10dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"/>-->
 
         <View
             android:id="@+id/view_seperator"
@@ -43,12 +56,12 @@
             android:paddingTop="5.0dip"
             android:paddingRight="4.0dip"
             android:paddingBottom="1.0dip"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="25dp">
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
 
             <TextView
                 android:id="@+id/tv_tokeep_name"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="0.0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
@@ -86,12 +99,12 @@
             android:paddingTop="5.0dip"
             android:paddingRight="4.0dip"
             android:paddingBottom="1.0dip"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="25dp">
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
 
             <TextView
                 android:id="@+id/tv_todelete_name"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="0.0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
@@ -113,7 +126,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
                 android:text="@string/TEXT_BT_LOOK"
-                android:onClick="b_todelete_look_Click"/>
+                android:onClick="b_todelete_look_Click" />
 
 
         </LinearLayout>
@@ -128,12 +141,12 @@
             android:paddingTop="5.0dip"
             android:paddingRight="4.0dip"
             android:paddingBottom="1.0dip"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="25dp">
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
 
             <TextView
                 android:id="@+id/tv_todownload_name"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="0.0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"

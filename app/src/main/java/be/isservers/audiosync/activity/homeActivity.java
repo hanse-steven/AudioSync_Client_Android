@@ -5,13 +5,14 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -37,6 +38,7 @@ public class homeActivity extends AppCompatActivity {
     public NotificationManagerCompat notificationManager;
 
     private ListingMusic listingMusic;
+    private boolean animationActivate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +57,17 @@ public class homeActivity extends AppCompatActivity {
         findViewById(R.id.ll_todownload).setVisibility(View.INVISIBLE);
         findViewById(R.id.view_seperator).setVisibility(View.INVISIBLE);
 
+        TextView tv_toKeep = findViewById(R.id.tv_tokeep_name);
+        tv_toKeep.setText(R.string.TEXT_TV_TOKEEP_NAME);
+
         Button b_download = findViewById(R.id.b_download);
         b_download.setVisibility(View.INVISIBLE);
         b_download.setText(R.string.BUTTON_DOWNLOAD);
-
-        findViewById(R.id.b_tokeep_look).setEnabled(true);
-        findViewById(R.id.b_todelete_look).setEnabled(true);
-        findViewById(R.id.b_todownload_look).setEnabled(true);
     }
 
     public void b_sync_Click(View view) {
+        launchAnimationButton();
+
         requestStoragePermission(this);
         hideAllBeforeSynchronisation();
 
@@ -89,31 +92,37 @@ public class homeActivity extends AppCompatActivity {
 
             Button button_tokeep = findViewById(R.id.button_tokeep_value);
             button_tokeep.setText(String.format(Locale.FRENCH,"%d",listingMusic.getToKeep().size()));
-            if (listingMusic.getToKeep().size() == 0) findViewById(R.id.b_tokeep_look).setEnabled(false);
+            if (listingMusic.getToKeep().size() == 0) findViewById(R.id.ll_tokeep).setVisibility(View.INVISIBLE);
 
             Button button_todelete = findViewById(R.id.button_todelete_value);
             button_todelete.setText(String.format(Locale.FRENCH,"%d",listingMusic.getToDelete().size()));
-            if (listingMusic.getToDelete().size() == 0) findViewById(R.id.b_todelete_look).setEnabled(false);
+            if (listingMusic.getToDelete().size() == 0) findViewById(R.id.ll_todelete).setVisibility(View.INVISIBLE);
 
             Button button_todownload = findViewById(R.id.button_todownload_value);
             button_todownload.setText(String.format(Locale.FRENCH,"%d",listingMusic.getToDownload().size()));
-            if (listingMusic.getToDownload().size() == 0) findViewById(R.id.b_todownload_look).setEnabled(false);
+            if (listingMusic.getToDownload().size() == 0) findViewById(R.id.ll_todownload).setVisibility(View.INVISIBLE);
 
-            findViewById(R.id.ll_tokeep).setVisibility(View.VISIBLE);
-            findViewById(R.id.ll_todelete).setVisibility(View.VISIBLE);
-            findViewById(R.id.ll_todownload).setVisibility(View.VISIBLE);
             findViewById(R.id.view_seperator).setVisibility(View.VISIBLE);
 
             Button b_download = findViewById(R.id.b_download);
             b_download.setText(String.format(Locale.FRENCH,"%s  (%s)", getResources().getString(R.string.BUTTON_DOWNLOAD), listingMusic.getSizeToDownload()));
 
-            if (listingMusic.getToDelete().size() > 0 || listingMusic.getToDownload().size() > 0)
+            if (listingMusic.getToDelete().size() > 0 || listingMusic.getToDownload().size() > 0){
                 findViewById(R.id.b_download).setVisibility(View.VISIBLE);
+            }
+            else{
+                TextView tv_toKeep = findViewById(R.id.tv_tokeep_name);
+                tv_toKeep.setText("Synchronisation à jour");
+
+                findViewById(R.id.ll_tokeep).setVisibility(View.VISIBLE);
+            }
+
 
 
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+        animationActivate = false;
     }
 
     private void launchListingActivity(List<Music> list){
@@ -157,5 +166,32 @@ public class homeActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel1);
             manager.createNotificationChannel(channel2);
         }
+    }
+
+    public void launchAnimationButton() {
+        new Thread(() -> {
+            animationActivate = true;
+            int degrees = 0;
+            FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+            while (animationActivate){
+                try {
+                    Thread.sleep(50);
+                    fab.setRotation(degrees);
+                    degrees += 10;
+                    if (degrees == 360) degrees = 0;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            while (fab.getRotation() != 180 && fab.getRotation() != 360){
+                try {
+                    Thread.sleep(50);
+                    fab.setRotation(degrees);
+                    degrees += 10;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
