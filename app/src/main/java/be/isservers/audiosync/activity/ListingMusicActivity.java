@@ -10,13 +10,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ListingMusicActivity extends AppCompatActivity {
+
+    ListView lv_list;
+    ArrayList<Music> musicTab;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -24,8 +29,10 @@ public class ListingMusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_music);
 
+        lv_list = findViewById(R.id.lv_list);
+
         Intent intent = getIntent();
-        ArrayList<Music> musicTab = (ArrayList<Music>) intent.getSerializableExtra("data");
+        musicTab = (ArrayList<Music>) intent.getSerializableExtra("data");
         if (musicTab == null) musicTab = new ArrayList<>();
 
         MusicAdapter musicAdapter = new MusicAdapter(this,musicTab);
@@ -40,7 +47,18 @@ public class ListingMusicActivity extends AppCompatActivity {
                 return view;
             }
         };*/
-        ((ListView) findViewById(R.id.lv_list)).setAdapter(musicAdapter);
+        lv_list.setAdapter(musicAdapter);
+        lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Music music = musicTab.get(position);
+                Intent openMusicPlayer = new Intent(ListingMusicActivity.this,MusicPlayer.class);
+                openMusicPlayer.putExtra("music",(Serializable) music);
+                startActivity(openMusicPlayer);
+            }
+        });
+
+
     }
 
     /*public static String substring_separator(String buffer, String charac){

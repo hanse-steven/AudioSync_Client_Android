@@ -2,7 +2,6 @@ package be.isservers.audiosync.asyncTask;
 
 import android.os.AsyncTask;
 import android.os.SystemClock;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -72,7 +71,6 @@ public class DeleteFile extends AsyncTask<String,Integer,String> {
                 System.out.println("Echec dans la suppresion de " + Music.PathToMusic + "/"+filename);
             };
         }
-        Toast.makeText(parent,"Suppresion terminée",Toast.LENGTH_SHORT).show();
         return null;
     }
     @Override

@@ -2,7 +2,6 @@ package be.isservers.audiosync.asyncTask;
 
 import android.os.AsyncTask;
 import android.os.SystemClock;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -77,7 +76,7 @@ public class DownloadFile extends AsyncTask<String,Integer,String> {
                 publishProgress(1);
                 String filename = music.getName().replace(" ","_");
 
-                URLConnection conn = new URL("http://audiosync.isservers.be/music/"+ filename + ".mp3").openConnection();
+                URLConnection conn = new URL("http://isservers.be:9090/music/"+ music.getHash()).openConnection();
                 InputStream is = conn.getInputStream();
 
                 OutputStream outputStream = new FileOutputStream(new File(Music.PathToMusic + "/"+filename+".mp3"));
@@ -92,7 +91,6 @@ public class DownloadFile extends AsyncTask<String,Integer,String> {
                 e.printStackTrace();
             }
         }
-        Toast.makeText(parent,"Téléchargement terminé",Toast.LENGTH_SHORT).show();
 
         return null;
     }

@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.MusicPlayer">
+
+        </activity>
         <activity android:name=".activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ListingMusicActivity">
+
+        </activity>
     </application>
 
 </manifest>
