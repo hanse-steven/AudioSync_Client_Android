@@ -69,7 +69,7 @@ public class DeleteFile extends AsyncTask<String,Integer,String> {
             String filename = music.getName().replace(" ","_");
             if(!new File(Music.PathToMusic + "/"+filename).delete()){
                 System.out.println("Echec dans la suppresion de " + Music.PathToMusic + "/"+filename);
-            };
+            }
         }
         return null;
     }

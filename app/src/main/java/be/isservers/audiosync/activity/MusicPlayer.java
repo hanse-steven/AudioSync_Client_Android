@@ -1,9 +1,5 @@
 package be.isservers.audiosync.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,9 +8,10 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.io.File;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.IOException;
-import java.util.ArrayList;
 
 import be.isservers.audiosync.R;
 import be.isservers.audiosync.convert.Music;
@@ -114,8 +111,6 @@ public class MusicPlayer extends AppCompatActivity {
                 if (musicPlayer.isPlaying()) {
                     try {
                         final double current = musicPlayer.getCurrentPosition();
-                        double duration = musicPlayer.getDuration();
-                        final double position = (100.0/duration) * current;
                         final String elapsedTime = millisecondsToString((int) current);
 
                         runOnUiThread(() -> {
@@ -125,14 +120,14 @@ public class MusicPlayer extends AppCompatActivity {
 
                         Thread.sleep(250);
                     }
-                    catch (InterruptedException e) {}
+                    catch (InterruptedException ignored) {}
                 }
             }
         }).start();
     }
 
     public String millisecondsToString(int time){
-        String elpaseTime = "";
+        String elpaseTime;
         int minutes = time / 1000 / 60;
         int seconds = time / 1000 % 60;
         elpaseTime = minutes + ":";

@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class PostRequest extends AsyncTask<String, Integer, String> {
 
@@ -30,12 +31,12 @@ public class PostRequest extends AsyncTask<String, Integer, String> {
             con.setRequestProperty("Accept","application/json");
             con.setDoOutput(true);
             OutputStream os = con.getOutputStream();
-            byte[] input = strings[1].getBytes("utf-8");
+            byte[] input = strings[1].getBytes(StandardCharsets.UTF_8);
             os.write(input,0,input.length);
 
-            try(BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+            try(BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                 StringBuilder response = new StringBuilder();
-                String responseLine = null;
+                String responseLine;
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }

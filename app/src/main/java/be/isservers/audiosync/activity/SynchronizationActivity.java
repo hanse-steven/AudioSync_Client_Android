@@ -122,8 +122,6 @@ public class SynchronizationActivity extends AppCompatActivity {
                 findViewById(R.id.ll_tokeep).setVisibility(View.VISIBLE);
             }
 
-
-
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
