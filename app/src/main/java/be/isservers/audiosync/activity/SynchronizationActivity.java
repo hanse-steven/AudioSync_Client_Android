@@ -5,10 +5,12 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -32,7 +34,7 @@ import be.isservers.audiosync.asyncTask.DownloadFile;
 
 import static be.isservers.audiosync.authorization.AutorizationRequest.requestStoragePermission;
 
-public class HomeActivity extends AppCompatActivity {
+public class SynchronizationActivity extends AppCompatActivity {
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
     public NotificationManagerCompat notificationManager;
@@ -43,12 +45,15 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_synchronization);
         notificationManager = NotificationManagerCompat.from(this);
         createNotificationChannels();
 
         requestStoragePermission(this);
         hideAllBeforeSynchronisation();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Synchronisation");
     }
 
     private void hideAllBeforeSynchronisation(){
@@ -125,22 +130,24 @@ public class HomeActivity extends AppCompatActivity {
         animationActivate = false;
     }
 
-    private void launchListingActivity(List<Music> list){
-        Intent activiy = new Intent(HomeActivity.this, ListingMusicActivity.class);
+    private void launchListingActivity(List<Music> list,String title){
+        Intent activiy = new Intent(SynchronizationActivity.this, ListingMusicActivity.class);
+        activiy.putExtra("isHome",false);
+        activiy.putExtra("title",title);
         activiy.putExtra("data", (Serializable) list);
         startActivity(activiy);
     }
 
     public void b_tokeep_look_Click(View view) {
-        launchListingActivity(listingMusic.getToKeep());
+        launchListingActivity(listingMusic.getToKeep(),"A garder");
     }
 
     public void b_todelete_look_Click(View view) {
-        launchListingActivity(listingMusic.getToDelete());
+        launchListingActivity(listingMusic.getToDelete(),"A supprimer");
     }
 
     public void b_todownload_look_Click(View view) {
-        launchListingActivity(listingMusic.getToDownload());
+        launchListingActivity(listingMusic.getToDownload(),"A télécharger");
     }
 
     public void b_download_Click(View view) {
@@ -200,5 +207,14 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

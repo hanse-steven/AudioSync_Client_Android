@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".activity.HomeActivity">
+    tools:context=".activity.SynchronizationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,15 +33,6 @@
             android:onClick="b_sync_Click"
             android:rotation="10"/>
 
-        <!--<Button
-            android:id="@+id/b_sync"
-            android:text="@string/BUTTON_SYNCH"
-            android:onClick="b_sync_Click"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_margin="10dp"/>-->
-
         <View
             android:id="@+id/view_seperator"
             style="@style/Divider.Horizontal"
@@ -66,7 +57,8 @@
                 android:layout_width="0.0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
-                android:text="@string/TEXT_TV_TOKEEP_NAME" />
+                android:text="@string/TEXT_TV_TOKEEP_NAME"
+                android:textColor="#FFF"/>
 
             <Button
                 android:id="@+id/button_tokeep_value"
@@ -75,6 +67,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_weight="0.3"
                 android:background="#00FFFFFF"
+                android:textColor="#FFF"
                 android:clickable="false"
                 android:text="@string/TEXT_TV_VALUE_DEFAULT" />
 
@@ -109,6 +102,7 @@
                 android:layout_width="0.0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
+                android:textColor="#FFF"
                 android:text="@string/TEXT_TV_TODELETE_NAME" />
 
             <Button
@@ -118,6 +112,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_weight="0.3"
                 android:background="#00FFFFFF"
+                android:textColor="#FFF"
                 android:clickable="false"
                 android:text="@string/TEXT_TV_VALUE_DEFAULT" />
 
@@ -151,6 +146,7 @@
                 android:layout_width="0.0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
+                android:textColor="#FFF"
                 android:text="@string/TEXT_TV_TODOWNLOAD_NAME" />
 
             <Button
@@ -161,6 +157,7 @@
                 android:layout_weight="0.3"
                 android:background="#00FFFFFF"
                 android:clickable="false"
+                android:textColor="#FFF"
                 android:text="@string/TEXT_TV_VALUE_DEFAULT" />
 
             <Button
