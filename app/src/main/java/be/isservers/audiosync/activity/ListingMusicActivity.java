@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class listingMusicActivity extends AppCompatActivity {
+public class ListingMusicActivity extends AppCompatActivity {
 
     @SuppressWarnings("unchecked")
     @Override
@@ -28,7 +28,9 @@ public class listingMusicActivity extends AppCompatActivity {
         ArrayList<Music> musicTab = (ArrayList<Music>) intent.getSerializableExtra("data");
         if (musicTab == null) musicTab = new ArrayList<>();
 
-        ArrayAdapter<Music> arrayMusic = new ArrayAdapter<Music>(this, android.R.layout.simple_list_item_1, musicTab){
+        MusicAdapter musicAdapter = new MusicAdapter(this,musicTab);
+
+        /*ArrayAdapter<Music> arrayMusic = new ArrayAdapter<Music>(this, android.R.layout.simple_list_item_1, musicTab){
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -37,12 +39,12 @@ public class listingMusicActivity extends AppCompatActivity {
                 text.setText(substring_separator(text.getText().toString(),"-"));
                 return view;
             }
-        };
-        ((ListView) findViewById(R.id.lv_list)).setAdapter(arrayMusic);
+        };*/
+        ((ListView) findViewById(R.id.lv_list)).setAdapter(musicAdapter);
     }
 
-    public static String substring_separator(String buffer, String charac){
+    /*public static String substring_separator(String buffer, String charac){
         int pos = buffer.lastIndexOf(charac);
         return buffer.substring(0,pos);
-    }
+    }*/
 }

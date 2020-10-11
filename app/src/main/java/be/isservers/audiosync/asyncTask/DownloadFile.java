@@ -17,10 +17,10 @@ import java.net.URLConnection;
 import java.util.List;
 
 import be.isservers.audiosync.R;
-import be.isservers.audiosync.activity.homeActivity;
+import be.isservers.audiosync.activity.HomeActivity;
 import be.isservers.audiosync.convert.Music;
 
-import static be.isservers.audiosync.activity.homeActivity.CHANNEL_2_ID;
+import static be.isservers.audiosync.activity.HomeActivity.CHANNEL_2_ID;
 
 public class DownloadFile extends AsyncTask<String,Integer,String> {
 
@@ -50,7 +50,7 @@ public class DownloadFile extends AsyncTask<String,Integer,String> {
                 .setOnlyAlertOnce(true)
                 .setProgress(progressMax,progressCurrent,false);
 
-        ((homeActivity) parent).notificationManager.notify(2,notification.build());
+        ((HomeActivity) parent).notificationManager.notify(2,notification.build());
 
         new Thread(() -> {
             SystemClock.sleep(500);
@@ -59,13 +59,13 @@ public class DownloadFile extends AsyncTask<String,Integer,String> {
 
                 notification.setProgress(progressMax,progressCurrent,false)
                     .setContentText("(" + progressCurrent + "/" + progressMax + ")   " + filename);
-                ((homeActivity) parent).notificationManager.notify(2,notification.build());
+                ((HomeActivity) parent).notificationManager.notify(2,notification.build());
                 SystemClock.sleep(1000);
             }
             notification.setContentText("Téléchargement terminé")
                     .setProgress(0,0,false)
                     .setOngoing(false);
-            ((homeActivity) parent).notificationManager.notify(2,notification.build());
+            ((HomeActivity) parent).notificationManager.notify(2,notification.build());
         }).start();
     }
 
