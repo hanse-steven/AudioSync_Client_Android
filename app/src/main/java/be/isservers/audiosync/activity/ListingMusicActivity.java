@@ -27,7 +27,8 @@ public class ListingMusicActivity extends AppCompatActivity {
 
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
-    public NotificationManagerCompat notificationManager;
+    public static final String CHANNEL_3_ID = "channel3";
+    public static NotificationManagerCompat notificationManager;
 
     ListView lv_list;
     ArrayList<Music> musicTab;
@@ -115,11 +116,18 @@ public class ListingMusicActivity extends AppCompatActivity {
                     "Channel 2",
                     NotificationManager.IMPORTANCE_LOW
             );
+            NotificationChannel channel3 = new NotificationChannel(
+                    CHANNEL_2_ID,
+                    "Channel 3",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
             channel2.setDescription("This is Channel 1");
             channel2.setDescription("This is Channel 2");
+            channel2.setDescription("This is Channel 3");
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
             manager.createNotificationChannel(channel2);
+            manager.createNotificationChannel(channel3);
         }
     }
 }
