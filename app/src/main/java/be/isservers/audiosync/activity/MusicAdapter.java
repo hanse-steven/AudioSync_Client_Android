@@ -29,9 +29,20 @@ public class MusicAdapter extends ArrayAdapter<Music> {
         TextView tvArtist = convertView.findViewById(R.id.tv_item_song_artiste);
 
         Music music = getItem(position);
-        tvTitle.setText(music.getName().replace("_"," ").replace(".mp3",""));
-        tvArtist.setText(music.getHash());
+        String title = music.getName().replace("_"," ").replace(".mp3","");
+        tvTitle.setText(title);
+        tvArtist.setText(start_substring_separator(title,"-"));
 
         return convertView;
+    }
+
+    public static String start_substring_separator(String buffer, String charac){
+        int pos = buffer.lastIndexOf(charac);
+        return buffer.substring(0,pos);
+    }
+
+    public static String end_substring_separator(String buffer, String charac){
+        int pos = buffer.lastIndexOf(charac);
+        return buffer.substring(pos+1);
     }
 }

@@ -1,29 +1,29 @@
 package be.isservers.audiosync.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import be.isservers.audiosync.R;
 import be.isservers.audiosync.convert.Music;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ListingMusicActivity extends AppCompatActivity {
 
     ListView lv_list;
     ArrayList<Music> musicTab;
+    boolean isHome;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,37 +32,62 @@ public class ListingMusicActivity extends AppCompatActivity {
         lv_list = findViewById(R.id.lv_list);
 
         Intent intent = getIntent();
-        musicTab = (ArrayList<Music>) intent.getSerializableExtra("data");
-        if (musicTab == null) musicTab = new ArrayList<>();
+        isHome = intent.getBooleanExtra("isHome",true);
+
+        if (isHome){
+            getSupportActionBar().setTitle("Acceuil");
+
+            musicTab = new ArrayList<>();
+            File directory = new File(Music.PathToMusic);
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile())
+                        musicTab.add(new Music(file.getName()));
+                }
+                Collections.sort(musicTab);
+            }
+        }
+        else {
+            getSupportActionBar().setTitle(intent.getStringExtra("title"));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            musicTab = (ArrayList<Music>) intent.getSerializableExtra("data");
+            if (musicTab == null) musicTab = new ArrayList<>();
+        }
 
         MusicAdapter musicAdapter = new MusicAdapter(this,musicTab);
 
-        /*ArrayAdapter<Music> arrayMusic = new ArrayAdapter<Music>(this, android.R.layout.simple_list_item_1, musicTab){
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position,convertView,parent);
-                TextView text = view.findViewById(android.R.id.text1);
-                text.setText(substring_separator(text.getText().toString(),"-"));
-                return view;
-            }
-        };*/
         lv_list.setAdapter(musicAdapter);
-        lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        lv_list.setOnItemClickListener((AdapterView.OnItemClickListener) (parent, view, position, id) -> {
+            if (isHome){
                 Music music = musicTab.get(position);
                 Intent openMusicPlayer = new Intent(ListingMusicActivity.this,MusicPlayer.class);
                 openMusicPlayer.putExtra("music",(Serializable) music);
                 startActivity(openMusicPlayer);
             }
+            else {
+                Toast.makeText(this,"Pas de lecture depuis cette endroit !", Toast.LENGTH_SHORT).show();
+            }
         });
-
-
     }
 
-    /*public static String substring_separator(String buffer, String charac){
-        int pos = buffer.lastIndexOf(charac);
-        return buffer.substring(0,pos);
-    }*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (isHome){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.action_bar_support_menu,menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_sync) {
+            Intent activiy = new Intent(ListingMusicActivity.this, SynchronizationActivity.class);
+            startActivity(activiy);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

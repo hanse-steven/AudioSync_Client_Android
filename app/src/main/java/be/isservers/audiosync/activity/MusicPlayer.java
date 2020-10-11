@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import be.isservers.audiosync.R;
 import be.isservers.audiosync.convert.Music;
 
+import static be.isservers.audiosync.activity.MusicAdapter.end_substring_separator;
+import static be.isservers.audiosync.activity.MusicAdapter.start_substring_separator;
+
 public class MusicPlayer extends AppCompatActivity {
 
     //https://github.com/nadimgouia/MusicPlayerApp
@@ -37,6 +40,7 @@ public class MusicPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_music_player);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Lecteur musical");
 
         music = (Music) getIntent().getSerializableExtra("music");
 
@@ -48,8 +52,9 @@ public class MusicPlayer extends AppCompatActivity {
         seekBarVolume = findViewById(R.id.seekBarVolume);
         btnPlay = findViewById(R.id.b_play);
 
-        tvTitle.setText(music.getName().replace("_"," ").replace(".mp3",""));
-        tvArtist.setText(music.getHash());
+        String title = music.getName().replace("_"," ").replace(".mp3","");
+        tvTitle.setText(end_substring_separator(title,"-"));
+        tvArtist.setText(start_substring_separator(title,"-"));
 
         musicPlayer = new MediaPlayer();
         try {
@@ -155,7 +160,7 @@ public class MusicPlayer extends AppCompatActivity {
             finish();
 
             if (musicPlayer.isPlaying()){
-                musicPlayer.stop(); 
+                musicPlayer.stop();
             }
         }
 

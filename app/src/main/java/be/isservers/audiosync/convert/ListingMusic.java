@@ -1,10 +1,14 @@
 package be.isservers.audiosync.convert;
 
+import android.view.MenuItem;
+
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import  org.apache.commons.lang3.builder.ToStringBuilder;
+
+import be.isservers.audiosync.R;
 
 public class ListingMusic implements Serializable {
 
@@ -62,5 +66,4 @@ public class ListingMusic implements Serializable {
 
         return false;
     }
-
 }
