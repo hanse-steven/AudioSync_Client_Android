@@ -16,7 +16,6 @@ import java.net.URLConnection;
 import java.util.List;
 
 import be.isservers.audiosync.R;
-import be.isservers.audiosync.activity.SynchronizationActivity;
 import be.isservers.audiosync.convert.Music;
 
 import static be.isservers.audiosync.activity.ListingMusicActivity.*;
