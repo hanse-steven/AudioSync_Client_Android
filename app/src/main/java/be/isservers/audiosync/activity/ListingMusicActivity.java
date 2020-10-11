@@ -1,10 +1,15 @@
 package be.isservers.audiosync.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
+
 import be.isservers.audiosync.R;
 import be.isservers.audiosync.convert.Music;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +25,10 @@ import java.util.Collections;
 
 public class ListingMusicActivity extends AppCompatActivity {
 
+    public static final String CHANNEL_1_ID = "channel1";
+    public static final String CHANNEL_2_ID = "channel2";
+    public NotificationManagerCompat notificationManager;
+
     ListView lv_list;
     ArrayList<Music> musicTab;
     boolean isHome;
@@ -28,6 +37,9 @@ public class ListingMusicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_music);
+
+        notificationManager = NotificationManagerCompat.from(this);
+        createNotificationChannels();
 
         lv_list = findViewById(R.id.lv_list);
 
@@ -89,5 +101,25 @@ public class ListingMusicActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void createNotificationChannels(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel1 = new NotificationChannel(
+                    CHANNEL_1_ID,
+                    "Channel 1",
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            NotificationChannel channel2 = new NotificationChannel(
+                    CHANNEL_2_ID,
+                    "Channel 2",
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            channel2.setDescription("This is Channel 1");
+            channel2.setDescription("This is Channel 2");
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel1);
+            manager.createNotificationChannel(channel2);
+        }
     }
 }
