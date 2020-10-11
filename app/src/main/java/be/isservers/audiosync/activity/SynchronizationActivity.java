@@ -1,9 +1,6 @@
 package be.isservers.audiosync.activity;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -35,9 +31,7 @@ import be.isservers.audiosync.asyncTask.DownloadFile;
 import static be.isservers.audiosync.authorization.AutorizationRequest.requestStoragePermission;
 
 public class SynchronizationActivity extends AppCompatActivity {
-    public static final String CHANNEL_1_ID = "channel1";
-    public static final String CHANNEL_2_ID = "channel2";
-    public NotificationManagerCompat notificationManager;
+
 
     private ListingMusic listingMusic;
     private boolean animationActivate = false;
@@ -46,8 +40,6 @@ public class SynchronizationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_synchronization);
-        notificationManager = NotificationManagerCompat.from(this);
-        createNotificationChannels();
 
         requestStoragePermission(this);
         hideAllBeforeSynchronisation();
@@ -151,26 +143,6 @@ public class SynchronizationActivity extends AppCompatActivity {
     public void b_download_Click(View view) {
         new DownloadFile(this,listingMusic.getToDownload()).execute();
         new DeleteFile(this,listingMusic.getToDelete()).execute();
-    }
-
-    public void createNotificationChannels(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel1 = new NotificationChannel(
-                    CHANNEL_1_ID,
-                    "Channel 1",
-                    NotificationManager.IMPORTANCE_LOW
-            );
-            NotificationChannel channel2 = new NotificationChannel(
-                    CHANNEL_2_ID,
-                    "Channel 2",
-                    NotificationManager.IMPORTANCE_LOW
-            );
-            channel2.setDescription("This is Channel 1");
-            channel2.setDescription("This is Channel 2");
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel1);
-            manager.createNotificationChannel(channel2);
-        }
     }
 
     public void launchAnimationButton() {

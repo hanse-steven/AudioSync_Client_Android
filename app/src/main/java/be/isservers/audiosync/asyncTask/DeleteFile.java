@@ -10,10 +10,9 @@ import java.io.File;
 import java.util.List;
 
 import be.isservers.audiosync.R;
-import be.isservers.audiosync.activity.SynchronizationActivity;
 import be.isservers.audiosync.convert.Music;
 
-import static be.isservers.audiosync.activity.SynchronizationActivity.CHANNEL_2_ID;
+import static be.isservers.audiosync.activity.ListingMusicActivity.*;
 
 public class DeleteFile extends AsyncTask<String,Integer,String> {
 
@@ -43,7 +42,7 @@ public class DeleteFile extends AsyncTask<String,Integer,String> {
                 .setOnlyAlertOnce(true)
                 .setProgress(progressMax,progressCurrent,false);
 
-        ((SynchronizationActivity) parent).notificationManager.notify(2,notification.build());
+        notificationManager.notify(2,notification.build());
 
         new Thread(() -> {
             SystemClock.sleep(500);
@@ -52,13 +51,13 @@ public class DeleteFile extends AsyncTask<String,Integer,String> {
 
                 notification.setProgress(progressMax,progressCurrent,false)
                         .setContentText("(" + progressCurrent + "/" + progressMax + ")   " + filename);
-                ((SynchronizationActivity) parent).notificationManager.notify(2,notification.build());
+                notificationManager.notify(2,notification.build());
                 SystemClock.sleep(1000);
             }
             notification.setContentText("Suppresion terminée")
                     .setProgress(0,0,false)
                     .setOngoing(false);
-            ((SynchronizationActivity) parent).notificationManager.notify(2,notification.build());
+            notificationManager.notify(2,notification.build());
         }).start();
     }
 
